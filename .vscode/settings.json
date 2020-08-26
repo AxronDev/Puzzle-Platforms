@@ -1,0 +1,10 @@
+{
+	"files.exclude": {
+		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/.vs": true,
+		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/.vscode": true,
+		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/Content": true,
+		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/DerivedDataCache": true,
+		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/Intermediate": true,
+		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/Saved": true
+	}
+}

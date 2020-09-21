@@ -1,10 +1,10 @@
 {
 	"files.exclude": {
-		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/.vs": true,
-		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/.vscode": true,
-		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/Content": true,
-		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/DerivedDataCache": true,
-		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/Intermediate": true,
-		"C:/Users/aaron/Documents/Repos/PuzzlePlatforms/Saved": true
+		"F:/Documents/LearningUnrealEngine/UnrealCourse/PuzzlePlatforms/.git": true,
+		"F:/Documents/LearningUnrealEngine/UnrealCourse/PuzzlePlatforms/.vscode": true,
+		"F:/Documents/LearningUnrealEngine/UnrealCourse/PuzzlePlatforms/Content": true,
+		"F:/Documents/LearningUnrealEngine/UnrealCourse/PuzzlePlatforms/DerivedDataCache": true,
+		"F:/Documents/LearningUnrealEngine/UnrealCourse/PuzzlePlatforms/Intermediate": true,
+		"F:/Documents/LearningUnrealEngine/UnrealCourse/PuzzlePlatforms/Saved": true
 	}
 }

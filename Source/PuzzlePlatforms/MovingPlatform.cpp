@@ -26,25 +26,38 @@ void AMovingPlatform::BeginPlay()
     GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
 }
 
+void AMovingPlatform::AddActiveTrigger() 
+{
+    ActiveTriggers++;
+}
+
+void AMovingPlatform::RemoveActiveTrigger() 
+{
+    ActiveTriggers--;
+}
+
 void AMovingPlatform::Tick(float DeltaTime) 
 {
     Super::Tick(DeltaTime);
 
     if(HasAuthority())
     {
-        FVector Location = GetActorLocation();
-        float JourneyLength = (GlobalTargetLocation - GlobalStartLocation).Size();
-        float JourneyTravled = (Location - GlobalStartLocation).Size();
-
-        if (JourneyTravled >= JourneyLength) 
+        if(ActiveTriggers > 0)
         {
-            FVector Buffer = GlobalStartLocation;
-            GlobalStartLocation = GlobalTargetLocation;
-            GlobalTargetLocation = Buffer;
+            FVector Location = GetActorLocation();
+            float JourneyLength = (GlobalTargetLocation - GlobalStartLocation).Size();
+            float JourneyTravled = (Location - GlobalStartLocation).Size();
+
+            if (JourneyTravled >= JourneyLength) 
+            {
+                FVector Buffer = GlobalStartLocation;
+                GlobalStartLocation = GlobalTargetLocation;
+                GlobalTargetLocation = Buffer;
+            }
+            
+            FVector Direction = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
+            Location += Direction * (Speed * DeltaTime);
+            SetActorLocation(Location);
         }
-        
-        FVector Direction = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
-        Location += Direction * (Speed * DeltaTime);
-        SetActorLocation(Location);
     }
 }

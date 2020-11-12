@@ -70,11 +70,12 @@ void UPuzzlePlatformsGameInstance::Join(const FString& Address)
           Menu->Teardown();
      }
      UEngine* Engine = GetEngine();
-     if (ensure(!Engine)) return;
+     if (!ensure(Engine)) return;
 
      Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
 
-     if(ensure(!PlayerController)) return;
+     if(!ensure(PlayerController)) return;
+     Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Player controller is good")));
 
      PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }
@@ -83,5 +84,12 @@ void UPuzzlePlatformsGameInstance::QuitSession()
 {
      PauseMenu->Teardown();
      ReturnToMainMenu();
+}
+
+void UPuzzlePlatformsGameInstance::QuitGame() 
+{
+     if(!ensure(PlayerController)) return;
+
+     PlayerController->ConsoleCommand("Quit", false);
 }
 

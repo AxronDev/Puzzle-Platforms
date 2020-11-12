@@ -24,5 +24,8 @@ class PUZZLEPLATFORMS_API IMenuInterface
 public:
 	virtual void Host() = 0;
 	virtual void Join(const FString& Address) = 0;
+	// Leaves server and returns to main menu
 	virtual void QuitSession() = 0;
+	// Closes game
+	virtual void QuitGame() = 0;
 };

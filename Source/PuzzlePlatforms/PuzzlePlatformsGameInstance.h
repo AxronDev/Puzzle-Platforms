@@ -27,14 +27,17 @@ class PUZZLEPLATFORMS_API UPuzzlePlatformsGameInstance : public UGameInstance, p
 	void LoadMenu();
 
 
-	UFUNCTION(Exec)
+	UFUNCTION()
 	void Host();
 
-	UFUNCTION(Exec)
+	UFUNCTION()
 	void Join(const FString& Address);
 
-	UFUNCTION(Exec)
+	UFUNCTION()
 	void QuitSession();
+
+	UFUNCTION()
+	void QuitGame();
 
 private:
 	TSubclassOf<UUserWidget> MenuClass;

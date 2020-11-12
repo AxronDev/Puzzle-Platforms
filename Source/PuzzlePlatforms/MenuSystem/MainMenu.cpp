@@ -25,6 +25,9 @@ bool UMainMenu::Initialize()
      if(!ensure(BackButton)) return false;
      BackButton->OnClicked.AddDynamic(this, &UMainMenu::OpenMainMenu);
 
+     if(!ensure(QuitButton)) return false;
+     QuitButton->OnClicked.AddDynamic(this, &UMainMenu::Quit);
+
      return true;
 }
 
@@ -58,6 +61,20 @@ void UMainMenu::OpenMainMenu()
      if(!ensure(MenuSwitcher)) return;
      if(!ensure(MainMenu)) return;
      MenuSwitcher->SetActiveWidget(MainMenu);
+}
+
+void UMainMenu::Quit() 
+{
+     /* UWorld World = GetWorld();
+     if()
+     if(ensure(!PlayerController)) return;
+
+     PlayerController->ConsoleCommand("Quit", false); */
+
+     if(!ensure(MenuInterface)) return;
+     MenuInterface->QuitGame();
+
+
 }
 
 void UMainMenu::SetMenuInterface(IMenuInterface* MenuInterfaceBase) 

@@ -8,6 +8,10 @@
 #include "MainMenu.generated.h"
 
 class UButton;
+class UWidgetSwitcher;
+class UCanvasPanel;
+class UVerticalBox;
+class UEditableTextBox;
 
 /**
  * 
@@ -28,13 +32,40 @@ protected:
 
 private:
 	UPROPERTY(meta = (BindWidget))
-	UButton* Host;
+	UButton* HostButton;
 
 	UPROPERTY(meta = (BindWidget))
-	UButton* Join;
+	UButton* JoinButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* JoinIPButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* BackButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UWidgetSwitcher* MenuSwitcher;
+
+	UPROPERTY(meta = (BindWidget))
+	UCanvasPanel* MainMenu;
+
+	UPROPERTY(meta = (BindWidget))
+	UVerticalBox* JoinMenu; 
+
+	UPROPERTY(meta = (BindWidget))
+	UEditableTextBox* IPAddressField; 
 
 	UFUNCTION()
 	void HostServer();
+
+	UFUNCTION()
+	void JoinIP();
+
+	UFUNCTION()
+	void OpenJoinMenu();
+
+	UFUNCTION()
+	void OpenMainMenu();
 
 	IMenuInterface* MenuInterface;
 };

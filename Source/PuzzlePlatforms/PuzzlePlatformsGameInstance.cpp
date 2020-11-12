@@ -7,17 +7,24 @@
 #include "Blueprint/UserWidget.h"
 #include "PlatformTrigger.h"
 #include "MenuSystem/MainMenu.h"
+#include "MenuSystem/PauseMenu.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance(const FObjectInitializer& ObjectInitializer) 
 {
      ConstructorHelpers::FClassFinder<UUserWidget> MenuBPClass(TEXT("/Game/MenuSystem/WBP_MainMenu"));
      if(MenuBPClass.Class != nullptr)
           MenuClass = MenuBPClass.Class;
+
+     ConstructorHelpers::FClassFinder<UUserWidget> PauseMenuBPClass(TEXT("/Game/MenuSystem/WBP_PauseMenu"));
+     if(PauseMenuBPClass.Class != nullptr)
+          PauseMenuClass = PauseMenuBPClass.Class;
 }
 
 void UPuzzlePlatformsGameInstance::Init() 
 {
      UE_LOG(LogTemp, Warning, TEXT("%s"), *MenuClass->GetName());
+     PlayerController = GetFirstLocalPlayerController();
 }
 
 void UPuzzlePlatformsGameInstance::LoadMenu() 
@@ -28,6 +35,16 @@ void UPuzzlePlatformsGameInstance::LoadMenu()
      Menu->Setup();
 
      Menu->SetMenuInterface(this);
+}
+
+void UPuzzlePlatformsGameInstance::LoadPauseMenu() 
+{
+     PauseMenu = CreateWidget<UPauseMenu>(this, PauseMenuClass);
+     if (!ensure(PauseMenu)) return;
+     
+     PauseMenu->Setup();
+
+     PauseMenu->SetMenuInterface(this);
 }
 
 void UPuzzlePlatformsGameInstance::Host() 
@@ -48,7 +65,7 @@ void UPuzzlePlatformsGameInstance::Host()
 
 void UPuzzlePlatformsGameInstance::Join(const FString& Address) 
 {
-     if (Menu) 
+     if (Menu)
      {
           Menu->Teardown();
      }
@@ -57,9 +74,14 @@ void UPuzzlePlatformsGameInstance::Join(const FString& Address)
 
      Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
 
-     APlayerController* PlayerController = GetFirstLocalPlayerController();
      if(ensure(!PlayerController)) return;
 
      PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+}
+
+void UPuzzlePlatformsGameInstance::QuitSession() 
+{
+     PauseMenu->Teardown();
+     ReturnToMainMenu();
 }
 

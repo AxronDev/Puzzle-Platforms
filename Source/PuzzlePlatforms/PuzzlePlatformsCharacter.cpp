@@ -4,10 +4,13 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Engine/Engine.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "PuzzlePlatformsGameInstance.h"
 
 //////////////////////////////////////////////////////////////////////////
 // APuzzlePlatformsCharacter
@@ -60,6 +63,8 @@ void APuzzlePlatformsCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAxis("MoveForward", this, &APuzzlePlatformsCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &APuzzlePlatformsCharacter::MoveRight);
 
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APuzzlePlatformsCharacter::PauseGame);
+
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
@@ -90,6 +95,17 @@ void APuzzlePlatformsCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVec
 void APuzzlePlatformsCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 		StopJumping();
+}
+
+void APuzzlePlatformsCharacter::PauseGame() 
+{
+	FString CurrentLevel = UGameplayStatics::GetCurrentLevelName(GetWorld(), true);
+	if(CurrentLevel != "ThirdPersonExampleMap") return;
+	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+	UPuzzlePlatformsGameInstance* PPGameInstance = Cast<UPuzzlePlatformsGameInstance>(GameInstance);
+     if (!ensure(PPGameInstance)) return;
+	PPGameInstance->LoadPauseMenu();
+	
 }
 
 void APuzzlePlatformsCharacter::TurnAtRate(float Rate)

@@ -36,17 +36,12 @@ class PUZZLEPLATFORMS_API UPuzzlePlatformsGameInstance : public UGameInstance, p
 	UFUNCTION()
 	void QuitSession();
 
-	UFUNCTION()
-	void QuitGame();
-
 private:
 	TSubclassOf<UUserWidget> MenuClass;
 	TSubclassOf<UUserWidget> PauseMenuClass;
 	
 	UMainMenu* Menu;
 	UPauseMenu* PauseMenu;
-
-	APlayerController* PlayerController = nullptr;
 
 public:
 	UFUNCTION(BlueprintCallable)

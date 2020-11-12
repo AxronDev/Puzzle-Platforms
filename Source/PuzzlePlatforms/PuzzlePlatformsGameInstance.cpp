@@ -24,7 +24,6 @@ UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance(const FObjectInitiali
 void UPuzzlePlatformsGameInstance::Init() 
 {
      UE_LOG(LogTemp, Warning, TEXT("%s"), *MenuClass->GetName());
-     PlayerController = GetFirstLocalPlayerController();
 }
 
 void UPuzzlePlatformsGameInstance::LoadMenu() 
@@ -73,8 +72,12 @@ void UPuzzlePlatformsGameInstance::Join(const FString& Address)
      if (!ensure(Engine)) return;
 
      Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
-
-     if(!ensure(PlayerController)) return;
+     APlayerController* PlayerController = GetFirstLocalPlayerController();
+     if(!ensure(PlayerController)) 
+     {
+          Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Player controller is bad")));
+          return;
+     }
      Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Player controller is good")));
 
      PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
@@ -85,11 +88,3 @@ void UPuzzlePlatformsGameInstance::QuitSession()
      PauseMenu->Teardown();
      ReturnToMainMenu();
 }
-
-void UPuzzlePlatformsGameInstance::QuitGame() 
-{
-     if(!ensure(PlayerController)) return;
-
-     PlayerController->ConsoleCommand("Quit", false);
-}
-

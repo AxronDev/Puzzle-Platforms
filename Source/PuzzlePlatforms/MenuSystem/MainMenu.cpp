@@ -65,16 +65,13 @@ void UMainMenu::OpenMainMenu()
 
 void UMainMenu::Quit() 
 {
-     /* UWorld World = GetWorld();
-     if()
-     if(ensure(!PlayerController)) return;
+     UWorld* World = GetWorld();
+     if(ensure(!World)) return;
 
-     PlayerController->ConsoleCommand("Quit", false); */
+     APlayerController* PlayerController = World->GetFirstPlayerController();
+     if(!ensure(PlayerController)) return;
 
-     if(!ensure(MenuInterface)) return;
-     MenuInterface->QuitGame();
-
-
+     PlayerController->ConsoleCommand("Quit", false);
 }
 
 void UMainMenu::SetMenuInterface(IMenuInterface* MenuInterfaceBase) 
